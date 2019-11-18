@@ -16,8 +16,8 @@ step 5: 解压缩，放入/usr/local/bin目录；
 
 从release目录下载最新的minikube版本，然后：
 
-chmod +x minikube
-mv minikube /usr/local/bin
+`chmod +x minikube
+mv minikube /usr/local/bin`
 
 
 
