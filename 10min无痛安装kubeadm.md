@@ -2,7 +2,7 @@
 
 ## centos 7 安装kubeadm1.16.3
 
-### 安装docker-ce
+### 一安装docker-ce
 #### 安装依赖
 ```
 sudo yum update -y && sudo yum install -y yum-utils \
@@ -35,8 +35,10 @@ cat > /etc/docker/daemon.json <<EOF
 }
 EOF
 ```
-# 重启使配置生效 & 开机自启
+#### 重启使配置生效 & 开机自启
+```
 systemctl restart docker && systemctl enable --now docker
+```
 
 二、安装kubeadm
 
