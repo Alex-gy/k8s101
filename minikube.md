@@ -68,3 +68,6 @@ pod/nginx-untrusted created
 $ kubectl exec nginx-untrusted -- uname -a
 Linux nginx-untrusted 4.4 #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 GNU/Linux
 ```
+> 我们可以清楚地发现：由于基于 runc 的容器与宿主机共享操作系统内核，runc 容器中查看到的 OS 内核版本与 Minikube 宿主机 OS 内核版本相同；而 gvisor 的 runsc 容器采用了独立内核，它和 Minikube 宿主机 OS 内核版本不同。
+
+正是因为每个沙箱容器拥有独立的内核，减小了安全攻击面，具备更好的安全隔离特性。适合隔离不可信的应用，或者多租户场景。
