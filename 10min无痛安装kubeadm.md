@@ -220,12 +220,11 @@ kubectl get pod -n kube-system |grep kube-proxy |awk '{system("kubectl delete po
 ```
 
 #### 查看proxy运行状态
-````
-kubectl get pod -n kube-system | grep kube-proxy
 ```
+kubectl get pod -n kube-system | grep kube-proxy
 
 ##### 查看日志,如果有 `Using ipvs Proxier.` 说明kube-proxy的ipvs 开启成功!
-```
+
 [root@192-168-1-163 ~]# kubectl logs kube-proxy-lz5cj -n kube-system
 I1115 15:59:06.739713       1 node.go:135] Successfully retrieved node IP: 192.168.1.163
 I1115 15:59:06.739779       1 server_others.go:176] Using ipvs Proxier.
