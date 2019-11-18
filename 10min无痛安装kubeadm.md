@@ -40,9 +40,10 @@ EOF
 systemctl restart docker && systemctl enable --now docker
 ```
 
-二、安装kubeadm
+### 二、安装kubeadm
 
-#设置国内阿里源
+#### 设置国内阿里源
+```
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -53,21 +54,27 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-
-# 关闭SElinux
+```
+#### 关闭SElinux
+```
 setenforce 0
 sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-
-# centos7用户还需要设置路由：
+```
+- centos7用户还需要设置路由：
+```
 yum install -y bridge-utils.x86_64
-
-# 加载br_netfilter模块，使用lsmod查看开启的模块
+```
+#### 加载br_netfilter模块，使用lsmod查看开启的模块
+```
 modprobe  br_netfilter
 cat <<EOF >  /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
+```
+```
 sysctl --system  # 重新加载所有配置文件
+```
 systemctl disable --now firewalld  # 关闭防火墙
 
 # k8s要求关闭swap  (qxl)
