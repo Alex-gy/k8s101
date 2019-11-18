@@ -1,3 +1,25 @@
+### 安装kubectl
+可以从kubernetes库上直接下载，方法如下：
+
+step 1: 访问官方github网址：https://github.com/kubernetes/kubernetes/releases
+
+step 2: 找到想使用的发布版本，在每个发布版本的最后一行有类似“CHANGELOG-1.10.md”这样的内容，点击超链进入；
+
+step 3: 然后进入“Client Binaries”区域；
+
+step 4: 选择和目标机器系统匹配的二进制包下载；
+
+step 5: 解压缩，放入/usr/local/bin目录；
+
+### 安装minikube
+首先记住阿里云发布的minikube地址：https://github.com/AliyunContainerService/minikube
+
+从release目录下载最新的minikube版本，然后：
+
+chmod +x minikube
+mv minikube /usr/local/bin
+
+
 
 ### 自定义配置
 ```
