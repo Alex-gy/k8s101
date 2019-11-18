@@ -96,7 +96,7 @@ Linux nginx-untrusted 4.4 #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 GNU/Linux
 
 
 我们现在可以进入进入 Minikube 虚拟机：
-
+ ```
 $ minikube ssh
 
 containerd 支持通过名空间对容器资源进行隔离，查看现有 containerd 名空间：
@@ -104,20 +104,22 @@ containerd 支持通过名空间对容器资源进行隔离，查看现有 conta
 $ sudo ctr namespaces ls
 NAME   LABELS
 k8s.io
-# 列出所有容器镜像
-$ sudo ctr --namespace=k8s.io images ls
+```
+### 列出所有容器镜像
+`$ sudo ctr --namespace=k8s.io images ls`
 ...
-# 列出所有容器列表
-$ sudo ctr --namespace=k8s.io containers ls
+### 列出所有容器列表
+`$ sudo ctr --namespace=k8s.io containers ls`
 
 在 Kubernetes 环境更加简单的方式是利用 crictl 对 pods 进行操作。
 
-# 查看pod列表
-$ sudo crictl pods
+### 查看pod列表
+`$ sudo crictl pods
 POD ID              CREATED             STATE               NAME                                         NAMESPACE              ATTEMPT
 78bd560a70327       3 hours ago         Ready               nginx-untrusted                              default                0
 94817393744fd       3 hours ago         Ready               nginx                                        default                0
 ...
+`
 # 查看名称包含nginx的pod的详细信息
 ```
 $ sudo crictl pods --name nginx -v
@@ -150,3 +152,4 @@ Annotations:
     kubernetes.io/config.seen -> 2019-10-27T02:38:18.206096389Z
     kubernetes.io/config.source -> api
 ```
+https://mmbiz.qpic.cn/mmbiz_png/yvBJb5IiafvmV0CZ6TBvU3wCHjgckTKJ2mNB6vDcOvq2UGeG1R3Mt7UJJaCKGfiabiblEP70tKqxgyjlDaJpPZSOQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1
