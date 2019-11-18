@@ -38,6 +38,7 @@ Linux minikube 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
 
 ```
 ### 开启对gvisor支持
+```
 ➜  ~ minikube addons enable gvisor
 ✅  gvisor was successfully enabled
 ➜  ~ kubectl get pod,runtimeclass gvisor -n kube-system
@@ -49,3 +50,21 @@ runtimeclass.node.k8s.io/gvisor   2019-11-18T04:19:29Z
 ➜  ~ kubectl get runtimeclasses.node.k8s.io gvisor     
 NAME     CREATED AT
 gvisor   2019-11-18T04:19:29Z
+```
+### 创建一个运行在 gvisor 沙箱容器中的 nginx 应用。
+```
+cat nginx-untrusted.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-untrusted
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: nginx
+    image: nginx
+$ kubectl apply -f nginx-untrusted.yaml
+pod/nginx-untrusted created
+$ kubectl exec nginx-untrusted -- uname -a
+Linux nginx-untrusted 4.4 #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 GNU/Linux
+```
