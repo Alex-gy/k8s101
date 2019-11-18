@@ -17,8 +17,9 @@ yum install -y docker-ce-18.06.1.ce-3.el7
 systemctl enable docker && systemctl start docker
 ```
 
-#修改docker cgroup驱动：native.cgroupdriver=systemd
-并增加docker加速源
+- 修改docker cgroup驱动：native.cgroupdriver=systemd
+- 增加docker加速源
+```
 cat > /etc/docker/daemon.json <<EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -33,7 +34,7 @@ cat > /etc/docker/daemon.json <<EOF
   ]
 }
 EOF
-
+```
 # 重启使配置生效 & 开机自启
 systemctl restart docker && systemctl enable --now docker
 
