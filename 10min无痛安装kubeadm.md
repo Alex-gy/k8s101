@@ -17,8 +17,8 @@ yum install -y docker-ce-18.06.1.ce-3.el7
 systemctl enable docker && systemctl start docker
 ```
 
-- 修改docker cgroup驱动：native.cgroupdriver=systemd
-- 增加docker加速源
+#### 修改docker cgroup驱动并增加国内加速源
+
 ```
 cat > /etc/docker/daemon.json <<EOF
 {
@@ -55,12 +55,13 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 ```
-#### 关闭SElinux
+#### 关闭SElinux& 防火墙
 ```
 setenforce 0
 sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+systemctl disable --now firewalld
 ```
-- centos7用户还需要设置路由：
+#### centos7用户还需要设置路由：
 ```
 yum install -y bridge-utils.x86_64
 ```
@@ -71,39 +72,44 @@ cat <<EOF >  /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
+sysctl --system
 ```
-```
-sysctl --system  # 重新加载所有配置文件
-```
-systemctl disable --now firewalld  # 关闭防火墙
 
-# k8s要求关闭swap  (qxl)
+#### k8s要求关闭swap 
+```
 swapoff -a && sysctl -w vm.swappiness=0  # 关闭swap
 sed -ri '/^[^#]*swap/s@^@#@' /etc/fstab  # 取消开机挂载swap
-
-# 安装kubelet kubeadm kubectl
+```
+#### 安装kubelet kubeadm kubectl
+```
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+```
 
-# 开机启动kubelet
+#### 开机启动kubelet
+```
 systemctl enable --now kubelet
+```
 
-三、使用kubeadm创建集群
+### 三、使用kubeadm创建集群
 
-# 初始化master节点
+#### 初始化master节点
+```
 kubeadm init \
 --image-repository registry.aliyuncs.com/google_containers \
 --pod-network-cidr=10.244.0.0/16 \
 --ignore-preflight-errors=cri \
 --kubernetes-version=1.16.3
+```
 
-# 设置权限
+#### 设置权限
+```
 mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
-# pod显示pending（需要安装网络插件）
-[root@192-168-1-163 ~]# kubectl get pod
-No resources found in default namespace.
+#### pod显示pending（需要安装网络插件）
+```
 [root@192-168-1-163 ~]# kubectl get pod -n kube-system
 NAME                                    READY   STATUS    RESTARTS   AGE
 coredns-58cc8c89f4-5856l                0/1     Pending   0          102s
@@ -113,18 +119,26 @@ kube-apiserver-192-168-1-163            1/1     Running   0          56s
 kube-controller-manager-192-168-1-163   1/1     Running   0          57s
 kube-proxy-ktzdr                        1/1     Running   0          101s
 kube-scheduler-192-168-1-163            1/1     Running   0          45s
-
-# 下载flannel网络插件
+```
+#### 网络插件(flannel方案）
+```
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
 
-# 修改镜像
+#### 修改镜像（指定国内镜像地址）
+```
 sed 's/quay.io\/coreos/registry.cn-beijing.aliyuncs.com\/imcto/g' kube-flannel.yml >> 1.yml
+```
 
-# 执行安装网络插件
+#### 安装网络插件
+```
 kubectl apply -f 1.yml
+```
 
-# 或者安装calico网络插件（可选）
+#### 网络插件（calico方案可选）
+```
 kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml
+```
 
 # 确保所有的Pod都处于Running状态。
 kubectl get pod –all-namespaces -o wide
