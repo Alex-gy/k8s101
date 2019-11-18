@@ -2,7 +2,7 @@
 
 ## centos 7 安装kubeadm1.16.3
 
-### 一安装docker-ce
+### 一、安装docker-ce
 #### 安装依赖
 ```
 sudo yum update -y && sudo yum install -y yum-utils \
