@@ -138,50 +138,61 @@ kubectl apply -f 1.yml
 kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml
 ```
 
-# 确保所有的Pod都处于Running状态。
+#### 确保所有的Pod都处于Running状态
+```
 kubectl get pod –all-namespaces -o wide
+```
 
-# master node参与工作负载（如果单节点，创建pod会处于pedding状态）
-查看污点标记
+#### master node参与工作负载（如果单节点，创建pod会处于pedding状态）
+- 查看污点标记
+```
 kubectl describe node |grep Taint
 Taints:             node-role.kubernetes.io/master:NoSchedule
-执行命令去除标记
+```
+- 执行命令去除标记
+```
 kubectl taint nodes --all node-role.kubernetes.io/master-
+```
 
 
-# 多台节点加入（单节点可跳过）
-kubeadm join 192.168.1.163:6443 --token 5moxhb.40obnw7uoz6dy506 \
-    --discovery-token-ca-cert-hash sha256:90d59ad0504c1291166f55bb0dc980fc87f8fc3760d23df141858962614d5116
+#### 添加多节点
 
-# 命令补全
+### 四、集群管理
+#### 命令补全
+```
 yum install -y bash-completion
 source /usr/share/bash-completion/bash_completion
 source <(kubectl completion bash)
 echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
 
 
-# 排错
+#### 排错
+```
 journalctl -f  # 当前输出日志
 journalctl -f -u kubelet  # 只看当前的kubelet进程日志
+```
 
-# 重置集群
+#### 重置集群(flannel网络）
+```
 kubeadm reset
 ifconfig cni0 down
 ip link delete cni0
 ifconfig flannel.1 down
 ip link delete flannel.1
 rm -rf /var/lib/cni/
+```
 
-# kubeadm 模式开启ipvs转发（可选）
+#### kubeadm 模式开启ipvs转发（可选）
 由于ipvs已经加入到了内核的主干，所以为kube-proxy开启ipvs的前提需要加载以下的内核模块：
-
 ip_vs
 ip_vs_rr
 ip_vs_wrr
 ip_vs_sh
 nf_conntrack_ipv4
 
-# 加载模块
+#### 加载模块
+```
 cat > /etc/sysconfig/modules/ipvs.modules <<EOF
 #!/bin/bash
 modprobe -- ip_vs
@@ -191,22 +202,30 @@ modprobe -- ip_vs_sh
 modprobe -- nf_conntrack_ipv4
 EOF
 chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+```
 
-# 安装ipset软件包和ipvsadm
+#### 安装ipset软件包和ipvsadm
+```
 yum install ipset -y
 yum install ipvsadm -y
-
-# kube-proxy开启ipvs
+```
+#### kube-proxy开启ipvs
+```
 修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
 kubectl edit cm kube-proxy -n kube-system
-
-# 删除之前的proxy pod
+```
+#### 删除之前的proxy pod
+```
 kubectl get pod -n kube-system |grep kube-proxy |awk '{system("kubectl delete pod "$1" -n kube-system")}'
+```
 
-# 查看proxy运行状态
+#### 查看proxy运行状态
+````
 kubectl get pod -n kube-system | grep kube-proxy
+```
 
-# 查看日志,如果有 `Using ipvs Proxier.` 说明kube-proxy的ipvs 开启成功!
+##### 查看日志,如果有 `Using ipvs Proxier.` 说明kube-proxy的ipvs 开启成功!
+```
 [root@192-168-1-163 ~]# kubectl logs kube-proxy-lz5cj -n kube-system
 I1115 15:59:06.739713       1 node.go:135] Successfully retrieved node IP: 192.168.1.163
 I1115 15:59:06.739779       1 server_others.go:176] Using ipvs Proxier.
@@ -219,9 +238,11 @@ I1115 15:59:06.741235       1 config.go:313] Starting service config controller
 I1115 15:59:06.741244       1 shared_informer.go:197] Waiting for caches to sync for service config
 I1115 15:59:06.841382       1 shared_informer.go:204] Caches are synced for endpoints config
 I1115 15:59:06.841391       1 shared_informer.go:204] Caches are synced for service config
+```
 
 
-# 安装dashboard
+#### 安装dashboard
+```
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta5/aio/deploy/recommended.yaml -O dashboard.yaml
 
 vim dashboard.yaml
@@ -268,12 +289,17 @@ subjects:
 - kind: ServiceAccount
   name: admin-user
   namespace: kubernetes-dashboard
+```
 
-# 执行rbac
+#### 执行rbac
+```
 kubectl apply -f auth.yaml
+```
 
-# 获取访问Dashboard的token
+#### 获取访问Dashboard的token
+```
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
 
-# 访问IP+端口号
+#### 访问IP+端口号
 需要用火狐浏览器打开
