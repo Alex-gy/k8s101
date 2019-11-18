@@ -1,5 +1,3 @@
-# k8s101
-
 ## centos 7 安装kubeadm1.16.3
 
 ### 一、安装docker-ce
