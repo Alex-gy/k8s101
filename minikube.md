@@ -1,4 +1,14 @@
 
+### 自定义配置
+```
+minikube start --image-mirror-country cn \
+    --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.5.1.iso \
+    --cpus=2 \
+    --memory=2000mb \
+    --disk-size=3g
+```
+
+
 ### 使用containerd作为引擎
 ```
 minikube start --image-mirror-country cn \
@@ -7,11 +17,22 @@ minikube start --image-mirror-country cn \
     --container-runtime=containerd
 ```
 
-### 自定义配置
+### 创建pod
 ```
-minikube start --image-mirror-country cn \
-    --iso-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.5.1.iso \
-    --cpus=2 \
-    --memory=2000mb \
-    --disk-size=3g
+kubectl run nginx --image=nginx --restart=Never
+```
+### 进入pod查看内核,发现和node节点同一内核（废话）
+、、、
+➜  ~ kubectl exec nginx -- uname -a                 
+Linux nginx 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
+➜  ~ minikube ssh
+                         _             _            
+            _         _ ( )           ( )           
+  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
+/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+
+$ uname -a
+Linux minikube 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
 ```
