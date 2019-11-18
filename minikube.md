@@ -22,7 +22,7 @@ minikube start --image-mirror-country cn \
 kubectl run nginx --image=nginx --restart=Never
 ```
 ### 进入pod查看内核,发现和node节点同一内核（废话）
-、、、
+```
 ➜  ~ kubectl exec nginx -- uname -a                 
 Linux nginx 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
 ➜  ~ minikube ssh
@@ -35,4 +35,17 @@ Linux nginx 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
 
 $ uname -a
 Linux minikube 4.19.76 #1 SMP Tue Oct 29 14:56:42 PDT 2019 x86_64 GNU/Linux
+
 ```
+### 开启对gvisor支持
+➜  ~ minikube addons enable gvisor
+✅  gvisor was successfully enabled
+➜  ~ kubectl get pod,runtimeclass gvisor -n kube-system
+NAME         READY   STATUS    RESTARTS   AGE
+pod/gvisor   1/1     Running   0          33s
+
+NAME                              CREATED AT
+runtimeclass.node.k8s.io/gvisor   2019-11-18T04:19:29Z
+➜  ~ kubectl get runtimeclasses.node.k8s.io gvisor     
+NAME     CREATED AT
+gvisor   2019-11-18T04:19:29Z
