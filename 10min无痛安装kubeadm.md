@@ -4,14 +4,18 @@
 
 ### 安装docker-ce
 #### 安装依赖
+```
 sudo yum update -y && sudo yum install -y yum-utils \
   device-mapper-persistent-data \
   lvm2
+```
 
-#安装docker
+#### 安装docker
+```
 curl -fsSL "https://get.docker.com/" | bash -s -- --mirror Aliyun && yum autoremove docker-ce -y
 yum install -y docker-ce-18.06.1.ce-3.el7
 systemctl enable docker && systemctl start docker
+```
 
 #修改docker cgroup驱动：native.cgroupdriver=systemd
 并增加docker加速源
