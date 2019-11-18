@@ -3,7 +3,7 @@
 ## centos 7 安装kubeadm1.16.3
 
 ### 安装docker-ce
-#安装依赖
+#### 安装依赖
 sudo yum update -y && sudo yum install -y yum-utils \
   device-mapper-persistent-data \
   lvm2
