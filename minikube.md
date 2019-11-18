@@ -152,4 +152,4 @@ Annotations:
     kubernetes.io/config.seen -> 2019-10-27T02:38:18.206096389Z
     kubernetes.io/config.source -> api
 ```
-https://mmbiz.qpic.cn/mmbiz_png/yvBJb5IiafvmV0CZ6TBvU3wCHjgckTKJ2mNB6vDcOvq2UGeG1R3Mt7UJJaCKGfiabiblEP70tKqxgyjlDaJpPZSOQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1
+
