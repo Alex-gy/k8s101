@@ -12,7 +12,6 @@ sudo yum update -y && sudo yum install -y yum-utils \
 ```
 curl -fsSL "https://get.docker.com/" | bash -s -- --mirror Aliyun && yum autoremove docker-ce -y
 yum install -y docker-ce-18.06.1.ce-3.el7
-systemctl enable docker && systemctl start docker
 ```
 
 #### 修改docker cgroup驱动并增加国内加速源
