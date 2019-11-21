@@ -17,7 +17,7 @@ yum install -y docker-ce-18.06.1.ce-3.el7
 #### 修改docker cgroup驱动并增加国内加速源
 
 ```
-cat > /etc/docker/daemon.json <<EOF
+cat <<EOF > /etc/docker/daemon.json 
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
   "registry-mirrors": ["https://registry.docker-cn.com"],
