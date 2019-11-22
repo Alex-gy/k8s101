@@ -1,13 +1,13 @@
 安装一台虚拟机
-`
+```
 multipass launch --name k8s --mem 2G --disk 20G
 
 multipass exec k8s -- sudo iptables -P FORWARD ACCEPT
-`
+````
 进入虚拟机
-`
+````
 multipass shell k8s
-`
+````
 查询microk8s
 `
 snap info microk8s
