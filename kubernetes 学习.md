@@ -46,10 +46,10 @@
 ## 二、实践篇
 
 ### 云上实验环境：
-#### katacoda
+#### katacoda（推荐，国外网站，可能会卡）
     https://katacoda.com/（推荐）
 
-#### 谷歌官方的play with k8s（翻墙）
+#### 谷歌官方的play with k8s（需要翻墙）
     https://labs.play-with-k8s.com/#
     
 
@@ -57,19 +57,25 @@
 
 #### 二进制搭建
     https://github.com/kubernetes/kubernetes
-    go语言程序，部署相对容易，难点在于证书管理/etcd/master节点高可用，不建议初学者用此法直接搭建。
+    不建议初学者用此法直接搭建，生产环境应用较多，难点在于证书管理/etcd/master节点高可用。
 
 #### kubeadm搭建
     官方推荐实验环境，需要指定软件和镜像源在国内地址，可以看我写的安装总结
     https://github.com/Alex-gy/k8s101/blob/master/10min%E6%97%A0%E7%97%9B%E5%AE%89%E8%A3%85kubeadm.md
 
-#### mac os和window10 版本docker desktop自带的k8s
+#### mac os和window10 版本docker desktop自带的k8s（个人电脑搭建）
     https://www.docker.com/products/docker-desktop
     比较简单，易于上手（推荐）
-#### minikube 和 microkube
+#### minikube 和 microkube（个人电脑搭建）
     本质是软件自动创建一个虚拟机，并安装k8s
     比较简单，易于上手
 
 #### 第三方ansbile安装脚本
     https://sealyun.com/docs/
     网上有很多，可以尝试下
+    
+#### 各公有云厂家的k8s产品
+    UK8S、ACK、TEK
+#### 各厂家的k8s管理平台
+    racher、kubesphere
+
