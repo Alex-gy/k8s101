@@ -77,5 +77,5 @@
 #### 各公有云厂家的k8s产品
     UK8S、ACK、TEK
 #### 各厂家的k8s管理平台
-    racher、kubesphere
+    rancher、kubesphere
 
