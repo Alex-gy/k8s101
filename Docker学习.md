@@ -42,3 +42,11 @@ EOF
 yum install -y epel-release bash-completion
 `
 
+#### 重启使配置生效 & 开机自启
+`
+systemctl restart docker && systemctl enable --now docker
+`
+#### 验证
+`
+docker info  & docker version
+`
