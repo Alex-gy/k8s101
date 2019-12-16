@@ -37,3 +37,8 @@ cat>/etc/docker/daemon.json<<EOF
 }
 EOF
 ```
+#### 补全docker命令
+`
+yum install -y epel-release bash-completion
+`
+
