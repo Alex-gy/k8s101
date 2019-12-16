@@ -17,19 +17,25 @@ yum install -y docker-ce-18.06.1.ce-3.el7
 #### 修改docker cgroup驱动并增加国内加速源
 
 ```
-cat > /etc/docker/daemon.json << EOF
+mkdir -p /etc/docker/
+cat>/etc/docker/daemon.json<<EOF
 {
- "registry-mirrors": ["https://registry.docker-cn.com"],
- "exec-opts": ["native.cgroupdriver=systemd"],
- "storage-driver": "overlay2",
- "storage-opts":["overlay2.override_kernel_check=true"],
- "log-driver": "json-file",
- "log-opts": {
-     "max-size": "500m",
-     "max-file": "3"
- },
- "oom-score-adjust": -1000,
- "data-root": "/var/lib/docker"
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "registry-mirrors": [
+      "https://fz5yth0r.mirror.aliyuncs.com",
+      "http://hub-mirror.c.163.com/",
+      "https://docker.mirrors.ustc.edu.cn/",
+      "https://registry.docker-cn.com"
+  ],
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m",
+    "max-file": "3"
+  }
 }
 EOF
 ```
