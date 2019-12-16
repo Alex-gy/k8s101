@@ -8,7 +8,7 @@ Docker 从 17.03 版本之后分为 CE（Community Edition: 社区版） 和 EE�
 
 #### 安装
 
-`export VERSION=19.03
+```export VERSION=19.03
 curl -fsSL "https://get.docker.com/" | bash -s -- --mirror Aliyun
-`
+````
 
