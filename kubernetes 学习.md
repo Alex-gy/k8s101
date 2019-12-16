@@ -66,6 +66,9 @@
 #### mac os和window10 版本docker desktop自带的k8s
     https://www.docker.com/products/docker-desktop
     比较简单，易于上手（推荐）
+#### minikube 和 microkube
+    本质是软件自动创建一个虚拟机，并安装k8s
+    比较简单，易于上手
 
 #### 第三方ansbile安装脚本
     https://sealyun.com/docs/
