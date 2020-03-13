@@ -10,8 +10,14 @@ sudo yum update -y && sudo yum install -y yum-utils \
 
 #### 安装docker
 ```
-curl -fsSL "https://get.docker.com/" | bash -s -- --mirror Aliyun && yum autoremove docker-ce -y
-yum install -y docker-ce-18.06.1.ce-3.el7
+yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+ yum install \
+  containerd.io-1.2.10 \
+  docker-ce-19.03.4 \
+  docker-ce-cli-19.03.4
 ```
 
 #### 修改docker cgroup驱动并增加国内加速源
