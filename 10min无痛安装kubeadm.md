@@ -23,25 +23,22 @@ yum-config-manager \
 #### 修改docker cgroup驱动并增加国内加速源
 
 ```
-mkdir -p /etc/docker/
-cat>/etc/docker/daemon.json<<EOF
+cat > /etc/docker/daemon.json <<EOF
 {
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "registry-mirrors": [
-      "https://fz5yth0r.mirror.aliyuncs.com",
-      "http://hub-mirror.c.163.com/",
-      "https://docker.mirrors.ustc.edu.cn/",
-      "https://registry.docker-cn.com"
-  ],
+  "exec-opts": ["native.cgroupdriver=cgroupfs"],
   "storage-driver": "overlay2",
-  "storage-opts": [
-    "overlay2.override_kernel_check=true"
-  ],
+
+  "data-root":"/data/docker",
   "log-driver": "json-file",
+  "bridge": "none",
+  "iptables": false,
+  "live-restore": true,
   "log-opts": {
-    "max-size": "100m",
-    "max-file": "3"
-  }
+    "max-size": "8m",
+    "max-file":"1"
+  },
+  "max-concurrent-downloads": 32,
+  "insecure-registries": ["registry.internal.com"]
 }
 EOF
 ```
