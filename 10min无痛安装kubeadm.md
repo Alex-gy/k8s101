@@ -20,7 +20,7 @@ yum-config-manager \
   docker-ce-cli-19.03.4
 ```
 
-#### 修改docker cgroup驱动并增加国内加速源
+#### 修改docker配置
 
 ```
 cat > /etc/docker/daemon.json <<EOF
@@ -44,7 +44,12 @@ EOF
 ```
 #### 重启使配置生效 & 开机自启
 ```
-systemctl restart docker && systemctl enable --now docker
+mkdir -p /etc/systemd/system/docker.service.d
+
+systemctl daemon-reload
+
+systemctl restart docker
+
 ```
 
 ### 二、安装kubeadm
