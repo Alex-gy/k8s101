@@ -27,12 +27,12 @@ cat > /etc/docker/daemon.json <<EOF
 {
   "exec-opts": ["native.cgroupdriver=cgroupfs"],
   "storage-driver": "overlay2",
-   "registry-mirrors": [
+  "registry-mirrors": [
      "https://fz5yth0r.mirror.aliyuncs.com",
      "http://hub-mirror.c.163.com/",
      "https://docker.mirrors.ustc.edu.cn/",
      "https://registry.docker-cn.com"
-
+     ],
   "data-root":"/data/docker",
   "log-driver": "json-file",
   "bridge": "none",
