@@ -1,4 +1,4 @@
-# k8s101
+# 安装gitlab
 
 1. 安装docker
 2. 安装docker-compose
